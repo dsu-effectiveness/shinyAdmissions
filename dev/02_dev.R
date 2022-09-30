@@ -23,6 +23,11 @@ devtools::install_github("dsu-effectiveness/utHelpR")
 
 usethis::use_dev_package("utHelpR")
 
+devtools::install_github("dsu-effectiveness/utShinyMods")
+
+usethis::use_dev_package("utShinyMods")
+
+
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module(name = "module",

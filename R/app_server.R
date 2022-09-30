@@ -52,12 +52,15 @@ app_server <- function(input, output, session) {
   # When finalized a pin should be added for the admissions funnel data.
   if (get_golem_config("show_sunburst")) {
     admissions_funnel_df <- shiny::reactive(
-      get_admissions_funnel(
-        method = "from_fake_data" # get_golem_config("data_source")
-      )
+      get_admissions_funnel(method = "from_sql")
     )
 
-    mod_sunburst_server("sunburst_1", admissions_funnel_df())
+    utShinyMods::mod_sunburst_diagram_server(
+      "admissions_funnel_sunburst_diagram",
+      df = admissions_funnel_df(),
+      step_cols = c("prospect_status", "admit_status"),
+      module_title = "Admissions Funnel"
+    )
   }
 
   mod_help_server("help_module")

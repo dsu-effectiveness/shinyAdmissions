@@ -23,7 +23,7 @@ app_ui <- function(request) {
         # Hence, the page is being hidden until it is required in the app.
         shiny::tabPanel(
           "Admission Funnel",
-          mod_sunburst_ui("sunburst_1")
+          utShinyMods::mod_sunburst_diagram_ui("admissions_funnel_sunburst_diagram")
         )
       } else {
         NULL
