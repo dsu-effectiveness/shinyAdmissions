@@ -7,8 +7,8 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_line_ui = function(id) {
-  ns = shiny::NS(id) # nolint
+mod_line_ui <- function(id) {
+  ns <- shiny::NS(id) # nolint
 
   year_min <- 2017
   year_max <- this_year()
@@ -24,7 +24,8 @@ mod_line_ui = function(id) {
             c("College" = "college"),
             c("Gender" = "gender"),
             c("Race/Ethnicity" = "race_ethnicity"),
-            c("None" = "none")),
+            c("None" = "none")
+          ),
           selected = "college"
         ),
         shinyWidgets::pickerInput(
@@ -32,27 +33,31 @@ mod_line_ui = function(id) {
           label = "Season",
           choices = c("Fall", "Spring"),
           selected = "Fall",
-          options = list(`actions-box` = TRUE)),
+          options = list(`actions-box` = TRUE)
+        ),
         shinyWidgets::pickerInput(
           ns("year"),
           label = "Year",
           choices = as.character(seq(from = year_min, to = year_max)),
           selected = as.character(year_max),
           multiple = TRUE,
-          options = list(`actions-box` = TRUE)),
+          options = list(`actions-box` = TRUE)
+        ),
         shinyWidgets::pickerInput(
           ns("add_filter"),
           "Add Filter",
           choices = c(
             c("College" = "college"),
             c("Gender" = "gender"),
-            c("Race/Ethnicity" = "race_ethnicity")),
+            c("Race/Ethnicity" = "race_ethnicity")
+          ),
           multiple = TRUE,
           options = list(`actions-box` = TRUE)
         ),
         conditional_filter_panel("gender", "Gender", id),
         conditional_filter_panel("race_ethnicity", "Race/Ethnicity", id),
-        conditional_filter_panel("college", "College", id)),
+        conditional_filter_panel("college", "College", id)
+      ),
       shiny::mainPanel(
         plotly::plotlyOutput(ns("enrollment_lines")) %>% shinycssloaders::withSpinner()
       )
@@ -63,12 +68,12 @@ mod_line_ui = function(id) {
 #' line Server Functions
 #'
 #' @noRd
-mod_line_server = function(id, daily_enrollment) {
+mod_line_server <- function(id, daily_enrollment) {
   shiny::moduleServer(id, function(input, output, session) {
-    ns = session$ns # nolint
+    ns <- session$ns # nolint
 
     shiny::observeEvent(input$group, {
-      remaining_choices = remaining_group_choices(input$group)
+      remaining_choices <- remaining_group_choices(input$group)
       shinyWidgets::updatePickerInput(
         session = session,
         inputId = "add_filter",
@@ -77,28 +82,31 @@ mod_line_server = function(id, daily_enrollment) {
       )
     })
 
-    output$gender_panel = conditional_filter_input(
+    output$gender_panel <- conditional_filter_input(
       daily_enrollment,
       "gender",
       "Gender",
       id,
-      session)
+      session
+    )
 
-    output$race_ethnicity_panel = conditional_filter_input(
+    output$race_ethnicity_panel <- conditional_filter_input(
       daily_enrollment,
       "race_ethnicity",
       "Race/Ethnicity",
       id,
-      session)
+      session
+    )
 
-    output$college_panel = conditional_filter_input(
+    output$college_panel <- conditional_filter_input(
       daily_enrollment,
       "college",
       "College",
       id,
-      session)
+      session
+    )
 
-    filter_inputs = shiny::reactive({
+    filter_inputs <- shiny::reactive({
       list(
         "gender" = input$gender,
         "race_ethnicity" = input$race_ethnicity,
@@ -106,11 +114,11 @@ mod_line_server = function(id, daily_enrollment) {
       )
     })
 
-    current_year = format(Sys.time(), "%Y")
-    pct_change = shiny::reactive(all(input$year == current_year))
+    current_year <- format(Sys.time(), "%Y")
+    pct_change <- shiny::reactive(all(input$year == current_year))
 
-    enrollment_data = shiny::reactive({
-      df = calculate_enrollment(
+    enrollment_data <- shiny::reactive({
+      df <- calculate_enrollment(
         daily_enrollment,
         input_year = input$year,
         input_season = input$season,
@@ -120,19 +128,23 @@ mod_line_server = function(id, daily_enrollment) {
         pct_change()
       )
       shiny::validate(
-        shiny::need(nrow(df) != 0,
-                    "There is no data which matches these filters.
-                    \n Please update your filters.")
+        shiny::need(
+          nrow(df) != 0,
+          "There is no data which matches these filters.
+                    \n Please update your filters."
+        )
       )
       return(df)
     })
 
-    output$enrollment_lines = plotly::renderPlotly({
-      enrollment_line_chart(enrollment_data(),
-                            input$group,
-                            colors_10(),
-                            pct_change(),
-                            input$year)
+    output$enrollment_lines <- plotly::renderPlotly({
+      enrollment_line_chart(
+        enrollment_data(),
+        input$group,
+        colors_10(),
+        pct_change(),
+        input$year
+      )
     })
   })
 }
@@ -150,12 +162,13 @@ this_year <- function() {
 #' Return all group choices except the selected group.
 #'
 #' @param selected_group Group selected in input widget
-remaining_group_choices = function(selected_group = "") {
-  all_choices = c(
+remaining_group_choices <- function(selected_group = "") {
+  all_choices <- c(
     c("College" = "college"),
     c("Gender" = "gender"),
-    c("Race/Ethnicity" = "race_ethnicity"))
-  without_selected = all_choices[all_choices != selected_group]
+    c("Race/Ethnicity" = "race_ethnicity")
+  )
+  without_selected <- all_choices[all_choices != selected_group]
   return(without_selected)
 }
 
@@ -168,8 +181,8 @@ remaining_group_choices = function(selected_group = "") {
 #' @param col_name Which column to create filter for
 #' @param input_label Label for pickerInput
 #' @param id ID for namespace
-conditional_filter_panel = function(col_name, input_label, id) {
-  ns = shiny::NS(id)
+conditional_filter_panel <- function(col_name, input_label, id) {
+  ns <- shiny::NS(id)
   shiny::conditionalPanel(
     condition = glue::glue("input.add_filter.includes('{col_name}')"),
     shiny::uiOutput(ns(glue::glue("{col_name}_panel"))),
@@ -185,8 +198,8 @@ conditional_filter_panel = function(col_name, input_label, id) {
 #' @param df Tibble containing retentions data
 #' @inheritParams conditional_filter_panel
 #' @param session Shiny session
-conditional_filter_input = function(df, col_name, input_label, id, session) {
-  ns = session$ns
+conditional_filter_input <- function(df, col_name, input_label, id, session) {
+  ns <- session$ns
   shiny::renderUI({
     shinyWidgets::pickerInput(
       ns(glue::glue("{col_name}")),
