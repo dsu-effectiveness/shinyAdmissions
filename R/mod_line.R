@@ -137,7 +137,7 @@ mod_line_server <- function(id, daily_enrollment) {
       return(df)
     })
 
-    output$enrollment_lines <- plotly::renderPlotly({
+    enrollment_chart <- shiny::reactive(
       enrollment_line_chart(
         enrollment_data(),
         input$group,
@@ -145,7 +145,9 @@ mod_line_server <- function(id, daily_enrollment) {
         pct_change(),
         input$year
       )
-    })
+    )
+
+    output$enrollment_lines <- plotly::renderPlotly(enrollment_chart())
   })
 }
 
