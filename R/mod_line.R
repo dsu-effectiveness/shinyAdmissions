@@ -56,7 +56,8 @@ mod_line_ui <- function(id) {
         ),
         conditional_filter_panel("gender", "Gender", id),
         conditional_filter_panel("race_ethnicity", "Race/Ethnicity", id),
-        conditional_filter_panel("college", "College", id)
+        conditional_filter_panel("college", "College", id),
+        shiny::actionButton(ns("show_enrollment"), "Create admissions chart")
       ),
       shiny::mainPanel(
         plotly::plotlyOutput(ns("enrollment_lines")) %>% shinycssloaders::withSpinner()
@@ -145,7 +146,10 @@ mod_line_server <- function(id, daily_enrollment) {
         pct_change(),
         input$year
       )
-    )
+    ) %>%
+      # Display the default enrollment chart when the app loads
+      # But only update it, when the user clicks "Create admissions chart"
+      shiny::bindEvent(input$show_enrollment, ignoreNULL = FALSE)
 
     output$enrollment_lines <- plotly::renderPlotly(enrollment_chart())
   })
