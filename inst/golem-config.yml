@@ -5,7 +5,7 @@ default:
   data_source: from_fake_data
 production:
   app_prod: yes
-  data_source: from_pin
+  data_source: from_sql
 local-staging:
   data_source: from_pin
   connect_server: !expr Sys.getenv("CONNECT_SERVER", "https://rs-connect.utahtech.edu")
