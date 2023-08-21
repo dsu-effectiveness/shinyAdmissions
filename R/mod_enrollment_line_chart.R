@@ -1,10 +1,10 @@
-#' over_time_line_chart UI Function
+#' enrollment_line_chart UI Function
 #'
 #' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' mod_enrollment_line_chart_ui("enrollment_line_chart_1")
 #'
 #' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
+#' mod_enrollment_line_chart_server("enrollment_line_chart_1")'
 #'
 #' @description A shiny Module.
 #'
@@ -14,7 +14,7 @@
 #'
 #' @export
 
-mod_over_time_line_chart_ui <- function(id) {
+mod_enrollment_line_chart_ui <- function(id) {
   ns <- NS(id)
   shiny::fluidRow(
     shiny::column(2, shiny::tagList(
@@ -29,13 +29,13 @@ mod_over_time_line_chart_ui <- function(id) {
   )
 }
 
-#' over_time_line_chart Server Functions
+#' enrollment_line_chart Server Functions
 #'
 #' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' mod_enrollment_line_chart_ui("enrollment_line_chart_1")
 #'
 #' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
+#' mod_enrollment_line_chart_server("enrollment_line_chart_1")'
 #'
 #' Justification for using extra parameters in the Server function, can be found in the following
 #' documentation: https://shiny.rstudio.com/articles/modules.html
@@ -53,21 +53,21 @@ mod_over_time_line_chart_ui <- function(id) {
 #'
 #' @export
 
-mod_over_time_line_chart_server <- function(id,
-                                            df,
-                                            time_col = c("Time" = "time_column"),
-                                            metric_col = c("Metric" = "metric_column"),
-                                            metric_summarization_function = sum,
-                                            grouping_cols = c(
-                                              "Category 1" = "entity_category_1",
-                                              "Category 2" = "entity_category_2",
-                                              "Category 3" = "entity_category_3"
-                                            ),
-                                            filter_cols = c(
-                                              "Category 1" = "entity_category_1",
-                                              "Category 2" = "entity_category_2",
-                                              "Category 3" = "entity_category_3"
-                                            )) {
+mod_enrollment_line_chart_server <- function(id,
+                                             df,
+                                             time_col = c("Time" = "time_column"),
+                                             metric_col = c("Metric" = "metric_column"),
+                                             metric_summarization_function = sum,
+                                             grouping_cols = c(
+                                               "Category 1" = "entity_category_1",
+                                               "Category 2" = "entity_category_2",
+                                               "Category 3" = "entity_category_3"
+                                             ),
+                                             filter_cols = c(
+                                               "Category 1" = "entity_category_1",
+                                               "Category 2" = "entity_category_2",
+                                               "Category 3" = "entity_category_3"
+                                             )) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

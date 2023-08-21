@@ -18,7 +18,7 @@ mod_enrollment_ui <- function(id, title, subtitle) {
     # Value boxes
     mod_enrollment_summary_boxes_ui(ns("summary")),
     # Time-line chart
-    mod_over_time_line_chart_ui(ns("line_chart"))
+    mod_enrollment_line_chart_ui(ns("line_chart"))
   )
 }
 
@@ -34,7 +34,7 @@ mod_enrollment_server <- function(id, df) {
 
     mod_enrollment_summary_boxes_server("summary")
 
-    mod_over_time_line_chart_server(
+    mod_enrollment_line_chart_server(
       "line_chart",
       df = df,
       time_col = c("Days Until Class Start" = "days_to_class_start"),
