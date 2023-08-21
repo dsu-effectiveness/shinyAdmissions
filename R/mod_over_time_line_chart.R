@@ -16,18 +16,15 @@
 
 mod_over_time_line_chart_ui <- function(id) {
   ns <- NS(id)
-  shiny::tagList(
-    shiny::uiOutput(ns("module_title_ui")),
-    shiny::fluidRow(
-      shiny::column(2, shiny::tagList(
-        shiny::uiOutput(ns("grouping_selection_ui")),
-        shiny::uiOutput(ns("filter_control_ui")),
-        shiny::uiOutput(ns("create_enrollment_ui"))
-      )),
-      shiny::column(
-        10,
-        shiny::tagList(plotly::plotlyOutput(ns("over_time_line_chart"), width = NULL))
-      )
+  shiny::fluidRow(
+    shiny::column(2, shiny::tagList(
+      shiny::uiOutput(ns("grouping_selection_ui")),
+      shiny::uiOutput(ns("filter_control_ui")),
+      shiny::uiOutput(ns("create_enrollment_ui"))
+    )),
+    shiny::column(
+      10,
+      shiny::tagList(plotly::plotlyOutput(ns("over_time_line_chart"), width = NULL))
     )
   )
 }
@@ -53,8 +50,6 @@ mod_over_time_line_chart_ui <- function(id) {
 #' @param   metric_summarization_function   A function for summarising the metric.
 #' @param   grouping_cols   The columns to be used for grouping.
 #' @param   filter_cols   The columns to be used for filtering.
-#' @param   module_title   Title for the chart.
-#' @param   module_sub_title   Subtitle for the chart.
 #'
 #' @export
 
@@ -72,19 +67,11 @@ mod_over_time_line_chart_server <- function(id,
                                               "Category 1" = "entity_category_1",
                                               "Category 2" = "entity_category_2",
                                               "Category 3" = "entity_category_3"
-                                            ),
-                                            module_title = "Title of Module",
-                                            module_sub_title = "Sub Title for module.") {
+                                            )) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # UI Generation ####
-    output$module_title_ui <- shiny::renderUI({
-      shiny::tagList(
-        htmltools::h2(module_title),
-        htmltools::p(module_sub_title)
-      )
-    })
     output$grouping_selection_ui <- shiny::renderUI({
       shiny::tagList(
         shinyWidgets::pickerInput(ns("grouping_selection"),

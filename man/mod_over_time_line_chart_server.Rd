@@ -13,9 +13,7 @@ mod_over_time_line_chart_server(
   grouping_cols = c(`Category 1` = "entity_category_1", `Category 2` =
     "entity_category_2", `Category 3` = "entity_category_3"),
   filter_cols = c(`Category 1` = "entity_category_1", `Category 2` = "entity_category_2",
-    `Category 3` = "entity_category_3"),
-  module_title = "Title of Module",
-  module_sub_title = "Sub Title for module."
+    `Category 3` = "entity_category_3")
 )
 }
 \arguments{
@@ -32,10 +30,6 @@ mod_over_time_line_chart_server(
 \item{grouping_cols}{The columns to be used for grouping.}
 
 \item{filter_cols}{The columns to be used for filtering.}
-
-\item{module_title}{Title for the chart.}
-
-\item{module_sub_title}{Subtitle for the chart.}
 }
 \description{
 To be copied in the UI

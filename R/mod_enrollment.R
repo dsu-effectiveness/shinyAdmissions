@@ -3,20 +3,28 @@
 #' @description A shiny Module.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
+#' @param   title   Title for the page / module.
+#' @param   subtitle   Title for the page / module.
 #'
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_enrollment_ui <- function(id) {
+mod_enrollment_ui <- function(id, title, subtitle) {
   ns <- NS(id)
+
   tagList(
+    htmltools::h2(title),
+    htmltools::p(subtitle),
     mod_over_time_line_chart_ui(ns("line_chart"))
   )
 }
 
 #' enrollment Server Functions
 #'
+#' @param   id   A unique identifier, linking the UI to the Server.
+#' @param   df   A data frame.
 #' @noRd
+
 mod_enrollment_server <- function(id, df) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
@@ -46,8 +54,7 @@ mod_enrollment_server <- function(id, df) {
         "Program" = "program",
         "Gender" = "gender",
         "Race/Ethnicity" = "race_ethnicity"
-      ),
-      module_title = "Daily Enrollment"
+      )
     )
   })
 }
