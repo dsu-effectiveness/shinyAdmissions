@@ -16,7 +16,7 @@ app_ui <- function(request) {
       theme = litera_theme(),
       shiny::tabPanel(
         "Daily Enrollment",
-        mod_over_time_line_chart_ui("daily_enrollment_line_chart")
+        mod_enrollment_ui("daily_enrollment")
       ),
       if (get_golem_config("show_sunburst")) {
         # The data that will be presented in the sunburst plot/page has yet to be finalized.

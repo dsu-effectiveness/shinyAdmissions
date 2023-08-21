@@ -19,33 +19,7 @@ app_server <- function(input, output, session) {
   waiter::waiter_hide()
 
   # Daily Enrollment Module ####
-  mod_over_time_line_chart_server("daily_enrollment_line_chart",
-    df = daily_enrollment_df,
-    time_col = c("Days Until Class Start" = "days_to_class_start"),
-    metric_col = c("Headcount" = "student_id"),
-    metric_summarization_function = dplyr::n_distinct,
-    grouping_cols = c(
-      "Term" = "term_desc",
-      "Season" = "season",
-      "Academic Year" = "academic_year",
-      "College" = "college",
-      "Department" = "department",
-      "Program" = "program",
-      "Gender" = "gender",
-      "Race/Ethnicity" = "race_ethnicity"
-    ),
-    filter_cols = c(
-      "Term" = "term_desc",
-      "Season" = "season",
-      "Academic Year" = "academic_year",
-      "College" = "college",
-      "Department" = "department",
-      "Program" = "program",
-      "Gender" = "gender",
-      "Race/Ethnicity" = "race_ethnicity"
-    ),
-    module_title = "Daily Enrollment"
-  )
+  mod_enrollment_server("daily_enrollment", df = daily_enrollment_df)
 
   # The data that will be presented in the sunburst plot has yet to be finalized.
   # Hence, the page is being hidden until it is required in the app.
