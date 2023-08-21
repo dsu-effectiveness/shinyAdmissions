@@ -52,8 +52,10 @@ app_server <- function(input, output, session) {
   # When finalized a pin should be added for the admissions funnel data.
   if (get_golem_config("show_sunburst")) {
     admissions_funnel_df <- shiny::reactive(
+      # When a pin is available for the admissions-funnel data, replace the 'method'
+      # with `get_colem_config("data_source")`
       get_admissions_funnel(
-        method = "from_fake_data" # get_golem_config("data_source")
+        method = "from_fake_data"
       )
     )
 
