@@ -1,5 +1,6 @@
-# shinyAdmissions (development version)
+# shinyAdmissions 1.0.0
 
+* Tagged release of the shinyAdmissions app
 * Made pin workflow, where daily workflow data is configurable via golem-config
 
 # shinyAdmissions 0.1.4
