@@ -15,6 +15,9 @@ mod_enrollment_ui <- function(id, title, subtitle) {
   tagList(
     htmltools::h2(title),
     htmltools::p(subtitle),
+    # Value boxes
+    mod_enrollment_summary_boxes_ui(ns("summary")),
+    # Time-line chart
     mod_over_time_line_chart_ui(ns("line_chart"))
   )
 }
@@ -28,6 +31,8 @@ mod_enrollment_ui <- function(id, title, subtitle) {
 mod_enrollment_server <- function(id, df) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
+
+    mod_enrollment_summary_boxes_server("summary")
 
     mod_over_time_line_chart_server(
       "line_chart",
