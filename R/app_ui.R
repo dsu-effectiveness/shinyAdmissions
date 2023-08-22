@@ -2,7 +2,9 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
+#'
 #' @noRd
+
 app_ui <- function(request) {
   shiny::tagList(
     shiny::tags$head(
@@ -23,7 +25,7 @@ app_ui <- function(request) {
         # Hence, the page is being hidden until it is required in the app.
         shiny::tabPanel(
           "Admission Funnel",
-          utShinyMods::mod_sunburst_diagram_ui("admissions_funnel_sunburst_diagram")
+          mod_sunburst_diagram_ui("admissions_funnel_sunburst_diagram")
         )
       } else {
         NULL
@@ -40,6 +42,7 @@ app_ui <- function(request) {
 #'
 #' This function is internally used to add external
 #' resources inside the Shiny application.
+
 golem_add_external_resources <- function() {
   golem::add_resource_path(
     "www",

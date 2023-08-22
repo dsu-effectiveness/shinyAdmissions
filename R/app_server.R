@@ -55,7 +55,7 @@ app_server <- function(input, output, session) {
       get_admissions_funnel(method = "from_sql")
     )
 
-    utShinyMods::mod_sunburst_diagram_server(
+    mod_sunburst_diagram_server(
       "admissions_funnel_sunburst_diagram",
       df = admissions_funnel_df(),
       step_cols = c("prospect_status", "admit_status"),
