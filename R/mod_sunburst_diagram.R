@@ -9,18 +9,18 @@
 #' @description A shiny Module.
 #'
 #' @param   id   Internal parameters for {shiny}.
+#' @param   title,subtitle   Title and subtitle for the page/module.
 #'
 #' @export
 #'
 #' @importFrom shiny NS tagList
 
-mod_sunburst_diagram_ui <- function(id) {
+mod_sunburst_diagram_ui <- function(id, title, subtitle = NULL) {
   ns <- NS(id)
 
   tagList(
-    uiOutput(
-      ns("module_title_ui")
-    ),
+    shiny::h2(title),
+    shiny::p(subtitle),
     shiny::fluidRow(
       shiny::column(
         width = 6,
@@ -42,24 +42,21 @@ mod_sunburst_diagram_ui <- function(id) {
 #' To be copied in the server
 #' mod_sunburst_diagram_server("sunburst_diagram_1")
 #'
+#' @param   id   Identifier to link server and UI for the module.
+#' @param   df   A data-frame.
+#' @param   step_cols   Which columns of the data-frame should define the rings in the sunburst
+#'   diagram.
+#'
 #' @export
+
 mod_sunburst_diagram_server <- function(id,
-                                        df = utShinyMods::entity_time_metric_categories_df,
+                                        df,
                                         step_cols = c(
                                           "entity_category_1", "entity_category_2",
                                           "entity_category_3", "entity_outcome"
-                                        ),
-                                        module_title = "Title of Module",
-                                        module_sub_title = "Sub Title for module.") {
-  moduleServer(id, function(input, output, session) {
+                                        )) {
+  shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
-
-    output$module_title_ui <- renderUI({
-      tagList(
-        h2(module_title),
-        p(module_sub_title)
-      )
-    })
 
     # Sunburst diagram requires all step columns to be of type character
     df[step_cols] <- lapply(df[step_cols], as.character)

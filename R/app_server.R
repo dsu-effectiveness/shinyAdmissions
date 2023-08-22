@@ -58,8 +58,7 @@ app_server <- function(input, output, session) {
     mod_sunburst_diagram_server(
       "admissions_funnel_sunburst_diagram",
       df = admissions_funnel_df(),
-      step_cols = c("prospect_status", "admit_status"),
-      module_title = "Admissions Funnel"
+      step_cols = c("prospect_status", "admit_status")
     )
   }
 
