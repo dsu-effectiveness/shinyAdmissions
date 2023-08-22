@@ -1,6 +1,8 @@
 # shinyAdmissions (development version)
 
 * Made pin workflow, where daily workflow data is configurable via golem-config
+* Copy in all code for generating sunburst diagrams from utShinyMods removing the dependency on
+  utShinyMods
 
 # shinyAdmissions 0.1.4
 
