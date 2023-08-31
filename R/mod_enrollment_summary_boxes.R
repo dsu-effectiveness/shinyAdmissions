@@ -2,11 +2,12 @@
 #'
 #' @description A shiny Module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param   id   ID to link the UI and server for this module.
 #'
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+
 mod_enrollment_summary_boxes_ui <- function(id) {
   ns <- NS(id)
   shiny::fluidRow(
@@ -31,21 +32,40 @@ mod_enrollment_summary_boxes_ui <- function(id) {
 
 #' enrollment_summary_boxes Server Functions
 #'
+#' @param   id   ID to link the server and UI components of this module
+#' @param   df   The daily-enrollment data-frame.
+#'
+#' @importFrom   rlang   .data .env
 #' @noRd
-mod_enrollment_summary_boxes_server <- function(id) {
+
+mod_enrollment_summary_boxes_server <- function(id, df) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    output$headcount <- shiny::renderText(12345)
+    headcount <- shiny::reactive({
+      max_academic_year <- max(unique(df[["academic_year"]]))
+      message(max_academic_year)
+
+      headcount_df <- df %>%
+        dplyr::filter(.data[["academic_year"]] == .env[["max_academic_year"]]) %>%
+        dplyr::summarise(headcount = dplyr::n_distinct(.data[["student_id"]]))
+
+      headcount_df[["headcount"]]
+    })
+
+    output$headcount <- shiny::renderText(headcount())
     output$percent_diff <- shiny::renderText(+12.5)
   })
 }
 
 #' An example shiny app to demonstrate the enrollment-summary-boxes module
 #'
+#' @param   df   A daily-enrollment data-frame. Must have `student_id` and `academic_year` columns.
 #' @noRd
 
-mod_enrollment_summary_boxes_app <- function(id = "abc") {
+mod_enrollment_summary_boxes_app <- function(df) {
+  id <- "abc"
+
   ui <- shiny::tagList(
     shiny::tags$head(
       golem_add_external_resources()
@@ -56,7 +76,7 @@ mod_enrollment_summary_boxes_app <- function(id = "abc") {
     )
   )
   server <- function(input, output, session) {
-    mod_enrollment_summary_boxes_server(id)
+    mod_enrollment_summary_boxes_server(id, df)
   }
   shinyApp(ui, server)
 }

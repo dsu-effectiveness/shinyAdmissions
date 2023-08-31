@@ -32,7 +32,7 @@ mod_enrollment_server <- function(id, df) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    mod_enrollment_summary_boxes_server("summary")
+    mod_enrollment_summary_boxes_server("summary", df = df)
 
     mod_enrollment_line_chart_server(
       "line_chart",
