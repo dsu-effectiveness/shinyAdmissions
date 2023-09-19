@@ -1,10 +1,10 @@
-#' over_time_line_chart UI Function
+#' enrollment_line_chart UI Function
 #'
 #' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' mod_enrollment_line_chart_ui("enrollment_line_chart_1")
 #'
 #' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
+#' mod_enrollment_line_chart_server("enrollment_line_chart_1")'
 #'
 #' @description A shiny Module.
 #'
@@ -14,31 +14,28 @@
 #'
 #' @export
 
-mod_over_time_line_chart_ui <- function(id) {
+mod_enrollment_line_chart_ui <- function(id) {
   ns <- NS(id)
-  shiny::tagList(
-    shiny::uiOutput(ns("module_title_ui")),
-    shiny::fluidRow(
-      shiny::column(2, shiny::tagList(
-        shiny::uiOutput(ns("grouping_selection_ui")),
-        shiny::uiOutput(ns("filter_control_ui")),
-        shiny::uiOutput(ns("create_enrollment_ui"))
-      )),
-      shiny::column(
-        10,
-        shiny::tagList(plotly::plotlyOutput(ns("over_time_line_chart"), width = NULL))
-      )
+  shiny::fluidRow(
+    shiny::column(2, shiny::tagList(
+      shiny::uiOutput(ns("grouping_selection_ui")),
+      shiny::uiOutput(ns("filter_control_ui")),
+      shiny::uiOutput(ns("create_enrollment_ui"))
+    )),
+    shiny::column(
+      10,
+      shiny::tagList(plotly::plotlyOutput(ns("over_time_line_chart"), width = NULL))
     )
   )
 }
 
-#' over_time_line_chart Server Functions
+#' enrollment_line_chart Server Functions
 #'
 #' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' mod_enrollment_line_chart_ui("enrollment_line_chart_1")
 #'
 #' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
+#' mod_enrollment_line_chart_server("enrollment_line_chart_1")'
 #'
 #' Justification for using extra parameters in the Server function, can be found in the following
 #' documentation: https://shiny.rstudio.com/articles/modules.html
@@ -53,38 +50,28 @@ mod_over_time_line_chart_ui <- function(id) {
 #' @param   metric_summarization_function   A function for summarising the metric.
 #' @param   grouping_cols   The columns to be used for grouping.
 #' @param   filter_cols   The columns to be used for filtering.
-#' @param   module_title   Title for the chart.
-#' @param   module_sub_title   Subtitle for the chart.
 #'
 #' @export
 
-mod_over_time_line_chart_server <- function(id,
-                                            df,
-                                            time_col = c("Time" = "time_column"),
-                                            metric_col = c("Metric" = "metric_column"),
-                                            metric_summarization_function = sum,
-                                            grouping_cols = c(
-                                              "Category 1" = "entity_category_1",
-                                              "Category 2" = "entity_category_2",
-                                              "Category 3" = "entity_category_3"
-                                            ),
-                                            filter_cols = c(
-                                              "Category 1" = "entity_category_1",
-                                              "Category 2" = "entity_category_2",
-                                              "Category 3" = "entity_category_3"
-                                            ),
-                                            module_title = "Title of Module",
-                                            module_sub_title = "Sub Title for module.") {
+mod_enrollment_line_chart_server <- function(id,
+                                             df,
+                                             time_col = c("Time" = "time_column"),
+                                             metric_col = c("Metric" = "metric_column"),
+                                             metric_summarization_function = sum,
+                                             grouping_cols = c(
+                                               "Category 1" = "entity_category_1",
+                                               "Category 2" = "entity_category_2",
+                                               "Category 3" = "entity_category_3"
+                                             ),
+                                             filter_cols = c(
+                                               "Category 1" = "entity_category_1",
+                                               "Category 2" = "entity_category_2",
+                                               "Category 3" = "entity_category_3"
+                                             )) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # UI Generation ####
-    output$module_title_ui <- shiny::renderUI({
-      shiny::tagList(
-        htmltools::h2(module_title),
-        htmltools::p(module_sub_title)
-      )
-    })
     output$grouping_selection_ui <- shiny::renderUI({
       shiny::tagList(
         shinyWidgets::pickerInput(ns("grouping_selection"),

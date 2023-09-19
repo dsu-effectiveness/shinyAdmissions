@@ -28,6 +28,8 @@ usethis::use_dev_package("utHelpR")
 golem::add_module(name = "module",
                   fct = "module_plot_generation",
                   with_test = TRUE)
+golem::add_module(name = "enrollment")
+golem::add_module(name = "enrollment_summary_boxes")
 
 ## Add internal datasets ----
 ## If you have data in your package
