@@ -8,6 +8,7 @@ $run_dev.*
 ^CONTRIBUTING\.md$
 ^\.Rproj\.user$
 ^\.app\.R$
+^\.github$
 ^\.gitlab-ci\.yml$
 ^\.lintr$
 ^\.renvignore$
@@ -23,4 +24,4 @@ _\.new\.png$
 _files$
 dev_history.R
 docs
-^\.github$
+sandbox/

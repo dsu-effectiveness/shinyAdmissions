@@ -51,13 +51,13 @@ app_server <- function(input, output, session) {
   # Hence, the page is being hidden until it is required in the app.
   # When finalized a pin should be added for the admissions funnel data.
   if (get_golem_config("show_sunburst")) {
-    admissions_funnel_df <- shiny::reactive(
-      get_admissions_funnel(
-        method = "from_fake_data" # get_golem_config("data_source")
-      )
-    )
+    admissions_funnel_df <- get_admissions_funnel(method = "from_sql")
 
-    mod_sunburst_server("sunburst_1", admissions_funnel_df())
+    mod_sunburst_diagram_server(
+      "admissions_funnel_sunburst_diagram",
+      df = admissions_funnel_df,
+      step_cols = c("prospect_status", "admit_status")
+    )
   }
 
   mod_help_server("help_module")
